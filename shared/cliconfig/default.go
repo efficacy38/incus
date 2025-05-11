@@ -33,7 +33,8 @@ var DefaultRemotes = map[string]Remote{
 // DefaultSettings are the configurations for the Config Struct.
 type DefaultSettings struct {
 	// Default flag format for list commands.
-	ListFormat string `yaml:"list_format"`
+	ListFormat        string `yaml:"list_format"`
+	ConsolePreferVga  bool   `yaml:"console_prefer_vga"`
 }
 
 // DefaultConfig returns the default configuration.

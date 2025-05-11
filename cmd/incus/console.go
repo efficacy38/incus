@@ -156,6 +156,17 @@ func (c *cmdConsole) console(d incus.InstanceServer, name string) error {
 
 	// Handle running consoles.
 	if c.flagType == "" {
+		if c.global.conf.Defaults.ConsolePreferVga {
+			inst, _, err := d.GetInstance(name)
+			if err != nil {
+				return errors.New(i18n.G("Can't get instance type with console_prefer_Vga is enabled"))
+			}
+
+			if inst.Type == "virtual-machine" {
+				c.flagType = "vga"
+			}
+		}
+
 		c.flagType = "console"
 	}
 
