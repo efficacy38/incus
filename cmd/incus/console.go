@@ -10,6 +10,7 @@ import (
 	"runtime"
 	"slices"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/gorilla/websocket"
@@ -372,8 +373,14 @@ func (c *cmdConsole) vga(d incus.InstanceServer, name string) error {
 	// Use either spicy or remote-viewer if available.
 	remoteViewer := c.findCommand("remote-viewer")
 	spicy := c.findCommand("spicy")
+	defaultVgaCommand := c.global.conf.Defaults.ConsoleVgaCommand
 
-	if remoteViewer != "" || spicy != "" {
+	if defaultVgaCommand != "" {
+		var cmd *exec.Cmd
+		// FIXME: I think this should be split to fit exec form
+		subsVgaCommand := strings.ReplaceAll(defaultVgaCommand, "SOCKET", socket)
+		cmd = exec.Command(subsVgaCommand)
+	} else if remoteViewer != "" || spicy != "" {
 		var cmd *exec.Cmd
 		if remoteViewer != "" {
 			cmd = exec.Command(remoteViewer, socket)

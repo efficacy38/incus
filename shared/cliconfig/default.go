@@ -35,6 +35,7 @@ type DefaultSettings struct {
 	// Default flag format for list commands.
 	ListFormat        string `yaml:"list_format"`
 	ConsolePreferVga  bool   `yaml:"console_prefer_vga"`
+	ConsoleVgaCommand string `yaml:"console_vga_command"`
 }
 
 // DefaultConfig returns the default configuration.
